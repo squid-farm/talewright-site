@@ -1,0 +1,44 @@
+---
+layout: default
+title: Getting started
+description: Play a Talewright story in your browser, write your own in any text editor, and open it in the web player.
+permalink: /getting-started/
+---
+<div class="container prose">
+  <h1>Getting started</h1>
+  <p>Talewright stories are folders of plain-text files. You can try everything in your browser. The extra
+    tools are optional.</p>
+
+  <ol class="steps">
+    <li>
+      <h2>Play the sample</h2>
+      <p>Open the <a href="{{ site.player_url }}">web player</a> and pick <em>The Lost Relic</em>.
+        Nothing to install.</p>
+    </li>
+    <li>
+      <h2>Write a story</h2>
+      <p>Use any editor that saves plain text. Start with two files in a folder:
+        <code>story.talewright.yaml</code> for the title, starting scene, characters and rules, and
+        <code>story.tale</code> for scenes and choices.
+        <a href="{{ '/docs/guide/first-story.html' | relative_url }}">Your first story</a> gives you the complete
+        starting text.</p>
+      <p>On Linux x64, the
+        <a href="https://marketplace.visualstudio.com/items?itemName=squid-farm.talewright">Talewright extension
+        for VS Code</a> adds highlighting, suggestions and live checks.</p>
+    </li>
+    <li>
+      <h2>Check and play it</h2>
+      <p>Zip the story folder, open the <a href="{{ site.player_url }}">web player</a> and choose
+        <strong>Open a story file</strong>. The player reports any mistakes with file and line number.
+        After making changes, create a fresh ZIP and open it again.</p>
+    </li>
+    <li>
+      <h2>Share it</h2>
+      <p>Send the same ZIP to friends to play in their browser. To build a website or desktop game, see
+        <a href="{{ '/docs/guide/sharing-your-story.html' | relative_url }}">Sharing your story</a>.</p>
+    </li>
+  </ol>
+
+  <p>For editor setup, optional command-line tools and platform details, read the full
+    <a href="{{ '/docs/guide/getting-started.html' | relative_url }}">getting started guide</a>.</p>
+</div>

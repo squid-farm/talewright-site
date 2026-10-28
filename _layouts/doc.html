@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{%- assign docs = site.pages | where_exp: "p", "p.layout == 'doc'" | sort: "nav_order" -%}
+<div class="container docs">
+  <nav class="docs-nav" aria-label="Documentation">
+    <p class="docs-nav-heading"><a href="{{ '/docs/' | relative_url }}"{% if page.url == '/docs/' %} aria-current="page"{% endif %}>Documentation</a></p>
+    {%- for group in site.data.doc_sections %}
+    <p class="docs-nav-heading">{% if group.index %}<a href="{{ group.index | relative_url }}"{% if page.url == group.index %} aria-current="page"{% endif %}>{{ group.title }}</a>{% else %}{{ group.title }}{% endif %}</p>
+    <ul>
+      {%- for doc in docs %}{% if doc.section == group.id and doc.url != group.index %}
+      <li><a href="{{ doc.url | relative_url }}"{% if doc.url == page.url %} aria-current="page"{% endif %}>{{ doc.title }}</a></li>
+      {%- endif %}{% endfor %}
+    </ul>
+    {%- endfor %}
+  </nav>
+  <article class="docs-content">
+    {{ content }}
+    <p class="docs-source">
+      These docs are maintained with the code in
+      <a href="{{ site.repo_url }}/blob/{{ site.docs_repo_branch }}/{{ page.source_path }}">squid-farm/talewright</a>.
+      Found a problem? <a href="{{ site.repo_url }}/issues/new/choose">Open an issue</a>.
+    </p>
+  </article>
+</div>

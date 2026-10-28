@@ -1,0 +1,5 @@
+- id: guide
+  title: Author guide
+  index: /docs/guide/
+- id: reference
+  title: Reference

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- assign page_title = page.title | default: site.title -%}
+  <title>{% if page_title == site.title %}{{ site.title }}{% else %}{{ page_title }} | {{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ page.description | default: site.description | strip_html | escape }}">
+  {%- unless page.robots == "noindex" %}
+  <link rel="canonical" href="{{ page.url | replace: 'index.html', '' | absolute_url }}">
+  {%- else %}
+  <meta name="robots" content="noindex">
+  {%- endunless %}
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:description" content="{{ page.description | default: site.description | strip_html | escape }}">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="container nav" aria-label="Main">
+      <a class="brand" href="{{ '/' | relative_url }}">Talewright</a>
+      <ul>
+        <li><a href="{{ '/getting-started/' | relative_url }}"{% if page.url == '/getting-started/' %} aria-current="page"{% endif %}>Getting started</a></li>
+        <li><a href="{{ '/docs/' | relative_url }}"{% if page.url contains '/docs/' %} aria-current="page"{% endif %}>Docs</a></li>
+        <li><a href="{{ site.player_url }}">Web player</a></li>
+        <li><a href="{{ site.repo_url }}">GitHub</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main" tabindex="-1">
+    {{ content }}
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>Talewright is a pre-1.0 public preview. Open source under the
+        <a href="{{ site.repo_url }}/blob/main/LICENSE">Mozilla Public License 2.0</a>.
+        Documentation and screenshots come from <a href="{{ site.repo_url }}">squid-farm/talewright</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

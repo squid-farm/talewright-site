@@ -1,0 +1,74 @@
+---
+layout: default
+title: Talewright
+description: Talewright is an open-source engine for text-first RPGs. Write branching, stat-driven stories in plain text and play them in your browser. Pre-1.0 preview.
+---
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">Pre-1.0 public preview</p>
+    <h1>Write branching, stat-driven RPG stories in plain text.</h1>
+    <p class="lede">Talewright is an open-source engine for text-first RPGs and visual novels with skill checks,
+      inventories, factions and many branches. You write in <strong>Talemark</strong>, a plain-text story language.
+      No programming required.</p>
+    <p class="actions">
+      <a class="button primary" href="{{ site.player_url }}">Try the web player</a>
+      <a class="button" href="{{ '/docs/' | relative_url }}">Read the docs</a>
+    </p>
+    <p class="note">The web player runs in your browser with nothing to install. Pick the built-in sample,
+      <em>The Lost Relic</em>, or open your own story ZIP. The ZIP is read on your computer, not uploaded.</p>
+  </div>
+</section>
+
+<section class="container split" aria-labelledby="example-heading">
+  <div>
+    <h2 id="example-heading">Stories are text files</h2>
+    <p>Scenes, dialogue and choices live in <code>.tale</code> files. Your cast and rules live in
+      <code>story.talewright.yaml</code>. Choices can require stats, roll skill checks and change state.</p>
+<pre><code>=== temple.entrance
+{player:first-name#possessive} torch gutters as **cold air** spills from the door.
+
+* [Climb the collapsed wall] skill-check athletics dc 14
+  success: -> temple.upper
+  failure: { player:hp -= 2 } -> temple.fall
+* [Read the glyphs] (requires: player:int >= 12) -> temple.glyphs</code></pre>
+  </div>
+  <figure>
+    <img src="{{ '/docs/images/playing.png' | relative_url }}" width="1200" height="760" loading="lazy"
+         alt="The Lost Relic sample story in the web player: story text and choices beside a character sheet.">
+    <figcaption>The sample story <em>The Lost Relic</em> in the web player.</figcaption>
+  </figure>
+</section>
+
+<section class="container" aria-labelledby="features-heading">
+  <h2 id="features-heading">What you get</h2>
+  <ul class="features">
+    <li><h3>RPG rules built in</h3><p>Stats, skills, d20 skill checks, items that modify stats, factions with
+      reputation tiers, XP and levels. Use the default ruleset or adjust it.</p></li>
+    <li><h3>Branching without the wiring</h3><p>Hubs and storylets offer whichever scenes are currently available,
+      so you don't have to connect every path by hand.</p></li>
+    <li><h3>Grammar handled for you</h3><p>Names, pronouns (including custom sets), possessives and a/an.</p></li>
+    <li><h3>Mistakes caught early</h3><p>Broken links, unknown items and misspelled stats are reported with file
+      and line number when the story loads.</p></li>
+    <li><h3>Saves, Back and Forward</h3><p>Named save slots plus full undo and redo for players.</p></li>
+    <li><h3>Optional character creation</h3><p>Let players choose names, pronouns, presets and starting stats.</p></li>
+  </ul>
+</section>
+
+<section class="container" aria-labelledby="status-heading">
+  <h2 id="status-heading">What's available today</h2>
+  <div class="callout" role="note">
+    <p><strong>Talewright is a pre-1.0 preview.</strong> Story syntax, save formats and tools may change
+      without notice, and backward compatibility is not guaranteed until version 1.0.</p>
+  </div>
+  <ul class="status">
+    <li><strong>Web player:</strong> <a href="{{ site.player_url }}">play.trytalewright.com</a>. Play the sample or
+      check and play your own story ZIP.</li>
+    <li><strong>VS Code extension:</strong> highlighting, suggestions and live checks for Talemark. The current
+      release supports Linux x64 only.</li>
+    <li><strong>Command-line tools:</strong> preview downloads for Windows, macOS and Linux on
+      <a href="{{ site.repo_url }}/releases">GitHub Releases</a>. So far, only Linux x64 has been verified.</li>
+    <li><strong>Sharing:</strong> send a story ZIP to anyone with the web player. Building a standalone website
+      (for example for itch.io) or desktop game requires the .NET 10 SDK on the author's computer.</li>
+  </ul>
+  <p><a href="{{ '/getting-started/' | relative_url }}">Get started →</a></p>
+</section>
