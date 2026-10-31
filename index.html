@@ -4,7 +4,8 @@ title: Talewright
 description: Talewright is an open-source engine for text-first RPGs. Write branching, stat-driven stories in plain text and play them in your browser. Pre-1.0 preview.
 ---
 <section class="hero">
-  <div class="container">
+  <div class="container hero-grid">
+    <div>
     <p class="eyebrow">Pre-1.0 public preview</p>
     <h1>Write branching, stat-driven RPG stories in plain text.</h1>
     <p class="lede">Talewright is an open-source engine for text-first RPGs and visual novels with skill checks,
@@ -16,6 +17,11 @@ description: Talewright is an open-source engine for text-first RPGs. Write bran
     </p>
     <p class="note">The web player runs in your browser with nothing to install. Pick the built-in sample,
       <em>The Lost Relic</em>, or open your own story ZIP. The ZIP is read on your computer, not uploaded.</p>
+    </div>
+    <figure class="hero-shot">
+      <img src="{{ '/docs/images/vscode-editor.png' | relative_url }}" width="1600" height="988"
+           alt="A Talemark scene open in VS Code, with highlighting and grey previews of each substitution's text, such as &quot;Mara&quot; and &quot;a sputtering torch&quot;.">
+    </figure>
   </div>
 </section>
 
@@ -33,9 +39,68 @@ description: Talewright is an open-source engine for text-first RPGs. Write bran
 * [Read the glyphs] (requires: player:int >= 12) -> temple.glyphs</code></pre>
   </div>
   <figure>
-    <img src="{{ '/docs/images/playing.png' | relative_url }}" width="1200" height="760" loading="lazy"
-         alt="The Lost Relic sample story in the web player: story text and choices beside a character sheet.">
+    <picture>
+      <source srcset="{{ '/assets/images/player-dark.jpg' | relative_url }}" media="(prefers-color-scheme: dark)">
+      <img src="{{ '/assets/images/player-light.jpg' | relative_url }}" width="1600" height="1075" loading="lazy"
+           alt="The Lost Relic in the web player: jungle camp artwork and story text beside Mara Burns's character sheet.">
+    </picture>
     <figcaption>The sample story <em>The Lost Relic</em> in the web player.</figcaption>
+  </figure>
+</section>
+
+<section class="band" aria-labelledby="editor-heading">
+  <div class="container">
+    <p class="eyebrow">VS Code extension</p>
+    <h2 id="editor-heading">An editor that knows your story</h2>
+    <p class="section-lede">The free <a href="https://marketplace.visualstudio.com/items?itemName=squid-farm.talewright">Talewright
+      extension</a> reads your whole story as you write. Grey previews show what each <code>{...}</code>
+      substitution will say, and your scenes, items and characters are one keystroke away.</p>
+    <div class="gallery">
+      <figure>
+        <img src="{{ '/assets/images/vscode-hover-detail.png' | relative_url }}" width="1200" height="747" loading="lazy"
+             alt="A hover card for {item:relic#the} showing the result &quot;the Relic of Ysh&quot;, each step that produced it, the item's stat modifiers and where it is declared.">
+        <figcaption><strong>Hover to explain.</strong> See the final text, each step that produced it and the
+          details of the item or character behind it.</figcaption>
+      </figure>
+      <figure>
+        <img src="{{ '/assets/images/vscode-completion-detail.png' | relative_url }}" width="1200" height="747" loading="lazy"
+             alt="Scene suggestions such as trail.river and trail.night after typing &quot;-&gt; tr&quot; in a choice.">
+        <figcaption><strong>Suggestions from your story.</strong> Scene ids, items, stats and characters
+          complete as you type.</figcaption>
+      </figure>
+      <figure>
+        <img src="{{ '/assets/images/vscode-diagnostics-detail.png' | relative_url }}" width="1200" height="747" loading="lazy"
+             alt="An unknown item named lantern underlined in red, with the error also listed in the Problems panel.">
+        <figcaption><strong>Live checks.</strong> Broken links and unknown names are underlined before
+          anyone plays.</figcaption>
+      </figure>
+    </div>
+    <p>Validate, publish and debug from the Command Palette too.
+      <a href="{{ '/docs/guide/getting-started.html#2-set-up-your-editor' | relative_url }}">Set up the editor →</a></p>
+  </div>
+</section>
+
+<section class="container split" aria-labelledby="debugger-heading">
+  <div>
+    <p class="eyebrow">Author Debugger</p>
+    <h2 id="debugger-heading">Jump straight to any scene</h2>
+    <p>Playing from the start to reach scene forty gets old fast. The Author Debugger opens any scene directly,
+      with exactly the state it needs.</p>
+    <ul class="checklist">
+      <li>Pick a scene, set a dice seed and override only the flags, items or stats it requires.</li>
+      <li>Inspect stats, inventory and variables, and see why each condition passed or failed.</li>
+      <li>Follow along in the scene's source, step back and forward, or edit state without restarting.</li>
+      <li>Saved changes to your story reload while you test.</li>
+    </ul>
+    <p><a href="{{ '/docs/guide/testing-your-story.html#3-jump-to-any-scene-with-the-author-debugger' | relative_url }}">Testing your story →</a></p>
+  </div>
+  <figure>
+    <picture>
+      <source srcset="{{ '/assets/images/author-debugger-detail-dark.jpg' | relative_url }}" media="(prefers-color-scheme: dark)">
+      <img src="{{ '/assets/images/author-debugger-detail.jpg' | relative_url }}" width="1416" height="930" loading="lazy"
+         alt="The Author Debugger playing The Lost Relic's temple.altar scene directly, showing its artwork and opening text.">
+    </picture>
+    <figcaption>Starting <em>The Lost Relic</em> at the altar, artwork and all.</figcaption>
   </figure>
 </section>
 
@@ -51,6 +116,12 @@ description: Talewright is an open-source engine for text-first RPGs. Write bran
       and line number when the story loads.</p></li>
     <li><h3>Saves, Back and Forward</h3><p>Named save slots plus full undo and redo for players.</p></li>
     <li><h3>Optional character creation</h3><p>Let players choose names, pronouns, presets and starting stats.</p></li>
+    <li><h3>Big branching stories</h3><p>Benchmarks compile 10,000-scene stories in under a second, so the tools
+      keep up as your story grows.</p></li>
+    <li><h3>Share it anywhere</h3><p>Publish a story file, a static website that works on itch.io, or a desktop
+      app.</p></li>
+    <li><h3>Story artwork</h3><p>Add PNG, JPEG or WebP images with alt text, even inside conditions. Missing files
+      are caught when you check your story, and artwork travels with story ZIPs and published games.</p></li>
   </ul>
 </section>
 
@@ -63,8 +134,8 @@ description: Talewright is an open-source engine for text-first RPGs. Write bran
   <ul class="status">
     <li><strong>Web player:</strong> <a href="{{ site.player_url }}">play.trytalewright.com</a>. Play the sample or
       check and play your own story ZIP.</li>
-    <li><strong>VS Code extension:</strong> highlighting, suggestions and live checks for Talemark. The current
-      release supports Linux x64 only.</li>
+    <li><strong>VS Code extension:</strong> highlighting, previews, hovers, suggestions and live checks for
+      Talemark. Linux x64 is tested; Windows, macOS and Linux ARM64 packages have provisional support.</li>
     <li><strong>Command-line tools:</strong> preview downloads for Windows, macOS and Linux on
       <a href="{{ site.repo_url }}/releases">GitHub Releases</a>. So far, only Linux x64 has been verified.</li>
     <li><strong>Sharing:</strong> send a story ZIP to anyone with the web player. Building a standalone website
