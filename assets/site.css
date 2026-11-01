@@ -179,6 +179,20 @@ figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
 .checklist li { position: relative; padding-left: 1.75rem; margin-bottom: 0.6rem; }
 .checklist li::before { content: "✦"; position: absolute; left: 0.25rem; color: var(--accent); }
 
+.feature-hero { padding-bottom: 1rem; }
+.feature-map { margin: 1.5rem 0 2.5rem; }
+.feature-map img { display: block; width: 100%; }
+.feature-map figcaption { max-width: 70rem; }
+.feature-grid { list-style: none; padding: 0; display: grid; gap: 1.5rem; margin: 1.5rem 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
+.feature-grid li { min-width: 0; }
+.feature-grid h3 { margin: 0.5rem 0 0.25rem; }
+.feature-grid p { margin: 0; }
+.feature-grid figure { height: 100%; }
+.feature-grid img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.feature-grid figcaption { color: var(--text); font-size: 0.95rem; margin-top: 0.75rem; }
+.feature-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; padding-left: 1.25rem; }
+.feature-note { margin: 1.5rem 0; }
+
 .features li { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
 .features li:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--accent); }
 .button { transition: transform 0.15s ease, box-shadow 0.15s ease; }

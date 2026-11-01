@@ -7,7 +7,7 @@ from urllib.parse import unquote, urljoin, urlparse
 import sys
 
 SITE_ORIGIN = "https://www.trytalewright.com"
-REQUIRED = ["index.html", "getting-started/index.html", "404.html", "docs/index.html",
+REQUIRED = ["index.html", "getting-started/index.html", "features/index.html", "404.html", "docs/index.html",
             "docs/guide/index.html", "docs/guide/getting-started.html"]
 
 

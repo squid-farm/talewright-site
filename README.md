@@ -25,7 +25,7 @@ manually. Run it manually after merging a docs change in `squid-farm/talewright`
 
 | Path | Purpose |
 |---|---|
-| `index.html`, `getting-started.html`, `404.html` | Marketing pages (HTML with Jekyll front matter) |
+| `index.html`, `getting-started.html`, `features.html`, `404.html` | Marketing pages (HTML with Jekyll front matter) |
 | `_layouts/` | Shared page layout and the docs layout with its sidebar |
 | `_data/doc_sections.yml` | Docs sidebar groups |
 | `assets/site.css` | All styling |
