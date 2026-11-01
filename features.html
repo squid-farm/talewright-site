@@ -1,0 +1,119 @@
+---
+layout: default
+title: Features
+description: Write branching RPG stories in Talemark, inspect and test them in the Author Debugger, then share them on the web or desktop.
+permalink: /features/
+image: /docs/images/author-debugger-map.png
+image_alt: The Author Debugger Map tab shows The Lost Relic scenes, hub offers, and the current run route.
+---
+<section class="hero feature-hero">
+  <div class="container">
+    <p class="eyebrow">A story workflow, from draft to play</p>
+    <h1>Write the branches. See the story. Test the play.</h1>
+    <p class="lede">Talewright is an open-source engine for text-first RPGs and visual novels. Write in
+      plain-text Talemark, inspect how scenes fit together, play through choices, and share your story.</p>
+    <p class="actions">
+      <a class="button primary" href="{{ site.player_url }}">Open the web player</a>
+      <a class="button" href="{{ '/getting-started/' | relative_url }}">Get started</a>
+    </p>
+  </div>
+</section>
+
+<section class="container" aria-labelledby="map-heading">
+  <p class="eyebrow">Inspect and test</p>
+  <h2 id="map-heading">See how your story branches</h2>
+  <p class="section-lede">The Author Debugger's Map tab lays out scenes, diverts, and hub offers so you can
+    inspect the shape of a story before and during a playtest.</p>
+  <figure class="feature-map">
+    <img src="{{ '/docs/images/author-debugger-map.png' | relative_url }}" width="1440" height="1150"
+         loading="lazy"
+         alt="The Author Debugger Map tab shows The Lost Relic's scenes and hub-offer groups, with the current run highlighted at trail.river.">
+    <figcaption>A real, partly played run of <em>The Lost Relic</em>. The current scene and route are
+      highlighted among the story's scenes, diverts, and hub offers.
+      <a href="{{ '/docs/images/author-debugger-map.png' | relative_url }}">Open the full-size screenshot</a>.</figcaption>
+  </figure>
+  <ul class="features">
+    <li><h3>Find the path—and what isn't reachable</h3><p>See reachable and unreachable scenes, grouped hub offers,
+      and the conditions that gate a divert or offer.</p></li>
+    <li><h3>Follow a playtest</h3><p>Visited scenes and taken diverts or hub offers highlight in route order as
+      you play, go Back, or go Forward. Preview a selected scene without applying its effects or rolling its checks.</p></li>
+    <li><h3>Take the map with you</h3><p>Export the full layout as SVG or PNG. PNG export has a documented memory
+      bound; oversized maps get a clear recommendation to use SVG.</p></li>
+  </ul>
+  <p class="callout feature-note" role="note"><strong>Availability:</strong> the production Map tab is on the
+    current <code>main</code> branch; it has not shipped in the latest downloadable CLI preview yet.
+    The debugger is an authoring tool, not a feature embedded in published player games.</p>
+</section>
+
+<section class="band" id="write" aria-labelledby="write-heading">
+  <div class="container">
+    <p class="eyebrow">Write</p>
+    <h2 id="write-heading">Build a story in plain text</h2>
+    <p class="section-lede">Scenes, dialogue, choices, and conditions live in readable <code>.tale</code> files.
+      Talemark handles RPG checks and story grammar; the VS Code extension helps you write and catch mistakes.</p>
+    <ul class="feature-grid">
+      <li><figure>
+        <img src="{{ '/assets/images/vscode-hover-detail.png' | relative_url }}" width="1200" height="747"
+             loading="lazy"
+             alt="VS Code shows a Talemark substitution with a hover explaining its rendered text and item details.">
+        <figcaption><strong>Know what your prose will say.</strong> Hover a substitution to see its rendered text
+          and how Talewright worked it out.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="{{ '/assets/images/vscode-diagnostics-detail.png' | relative_url }}" width="1200" height="747"
+             loading="lazy"
+             alt="The Talewright VS Code extension marks an unknown item and explains the diagnostic.">
+        <figcaption><strong>Catch mistakes while you write.</strong> Get diagnostics for issues such as an unknown
+          item, with the file and line to fix.</figcaption>
+      </figure></li>
+    </ul>
+    <p>Write branching choices, entry conditions, skill checks, and hub offers. Use stats, skills, items,
+      factions, grammar substitutions, and optional character creation without writing application code.</p>
+    <ul class="feature-links">
+      <li><a href="https://marketplace.visualstudio.com/items?itemName=squid-farm.talewright">Get the VS Code extension</a></li>
+      <li><a href="{{ '/docs/reference/talemark-syntax.html' | relative_url }}">Browse Talemark syntax</a></li>
+      <li><a href="{{ '/docs/guide/first-story.html' | relative_url }}">Follow the first-story tutorial</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="container" id="play" aria-labelledby="play-heading">
+  <p class="eyebrow">Play and share</p>
+  <h2 id="play-heading">Try the story, then choose how to share it</h2>
+  <div class="split">
+    <div>
+      <p>Play <em>The Lost Relic</em> in a browser, or open a story ZIP to check and play your own work.
+        Players can make a character when a story offers setup choices, keep named saves, and use Back
+        and Forward for undo and redo.</p>
+      <p>When you're ready to share, send a story ZIP for an existing Talewright player, or publish a
+        standalone web game or desktop app. Players don't need .NET; building those standalone packages
+        requires the .NET 10 SDK and internet access to obtain build dependencies, with additional
+        platform components on some targets. See the <a href="{{ '/docs/guide/sharing-your-story.html' | relative_url }}">publishing guide</a>
+        for details.</p>
+      <ul class="feature-links">
+        <li><a href="{{ site.player_url }}">Open the web player and choose The Lost Relic</a></li>
+        <li><a href="{{ '/docs/guide/testing-your-story.html' | relative_url }}">Test a story</a></li>
+        <li><a href="{{ '/docs/guide/sharing-your-story.html' | relative_url }}">Share or publish a story</a></li>
+      </ul>
+    </div>
+    <figure>
+      <img src="{{ '/docs/images/playing.png' | relative_url }}" width="1200" height="760" loading="lazy"
+           alt="The Lost Relic in the web player, with a story scene and a character sheet showing RPG stats and inventory.">
+      <figcaption>Play the sample or check a story ZIP in the web player—nothing to install.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="container" aria-labelledby="preview-heading">
+  <h2 id="preview-heading">A pre-1.0 preview</h2>
+  <div class="callout" role="note">
+    <p>Talewright is still in preview: syntax, save formats, and tools may change without notice, and
+      compatibility is not guaranteed before version 1.0. The VS Code extension is runtime-tested on
+      Linux x64; Windows, macOS, and Linux ARM64 support is provisional. Downloads for the CLI exist for
+      Windows, macOS, and Linux, but only Linux x64 execution has been verified so far.</p>
+  </div>
+  <p class="actions">
+    <a class="button primary" href="{{ '/getting-started/' | relative_url }}">Start writing</a>
+    <a class="button" href="{{ site.repo_url }}/releases">See CLI downloads</a>
+  </p>
+</section>
