@@ -202,3 +202,62 @@ figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
   .hero-shot, .features li:hover, .button:hover { transform: none; }
   .features li, .button { transition: none; }
 }
+
+.nav .search-trigger {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.nav .search-trigger:hover { color: var(--accent); text-decoration: underline; }
+
+.search-dialog {
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: min(80vh, 48rem);
+  padding: 1.25rem;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.search-dialog::backdrop { background: rgb(0 0 0 / 0.6); }
+.search-dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.search-dialog-heading h2 { margin: 0; font-size: 1.35rem; }
+.search-close {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.search-form { margin-top: 1rem; }
+.search-form label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+.search-input-row { display: flex; gap: 0.5rem; }
+.search-input-row input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.search-status { color: var(--muted); font-size: 0.95rem; }
+.search-results { padding-left: 1.5rem; }
+.search-results li { padding: 0.75rem 0; border-top: 1px solid var(--border); }
+.search-results li > p { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.95rem; }
+.search-result-link { display: flex; flex-direction: column; text-decoration: none; }
+.search-result-link:hover strong { text-decoration: underline; }
+.search-result-link small { color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 34rem) {
+  .search-input-row { align-items: stretch; flex-direction: column; }
+  .search-input-row .button { text-align: center; }
+}

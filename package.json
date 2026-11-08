@@ -1,0 +1,13 @@
+{
+  "name": "talewright-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:search": "esbuild scripts/search.js --bundle --format=esm --minify",
+    "test:search": "node --test tests/search.test.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "minisearch": "7.2.0"
+  }
+}

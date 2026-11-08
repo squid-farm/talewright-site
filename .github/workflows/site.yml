@@ -24,6 +24,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install search dependencies
+        run: npm ci
       - name: Check out the docs from squid-farm/talewright
         uses: actions/checkout@v4
         with:
@@ -38,6 +44,16 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Generate the section search index
+        run: python3 scripts/build_search_index.py _site
+      - name: Bundle the on-demand search code
+        run: npm run build:search -- --outfile=_site/assets/search.js
+      - name: Include the MiniSearch license
+        run: cp node_modules/minisearch/LICENSE.txt _site/assets/minisearch.LICENSE.txt
+      - name: Test search indexing and behavior
+        run: |
+          python3 -m unittest discover -s tests -v
+          npm run test:search
       - name: Check pages, links and anchors
         run: python3 scripts/check_site.py _site
       - uses: actions/upload-pages-artifact@v3

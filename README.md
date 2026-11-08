@@ -30,24 +30,38 @@ manually. Run it manually after merging a docs change in `squid-farm/talewright`
 | `_data/doc_sections.yml` | Docs sidebar groups |
 | `assets/site.css` | All styling |
 | `scripts/sync_docs.py` | Copies and adapts the public docs |
-| `scripts/check_site.py` | Checks required pages, titles, descriptions, internal links and anchors |
+| `scripts/build_search_index.py` | Generates one search record per built heading section |
+| `scripts/check_site.py` | Checks required pages, titles, descriptions, internal links, anchors and search records |
 | `.github/workflows/site.yml` | Builds and checks on pull requests; deploys from `main` |
 
 The site uses GitHub Pages' built-in Jekyll ([`actions/jekyll-build-pages`](https://github.com/actions/jekyll-build-pages)).
-There is no JavaScript, package manager or theme dependency.
+Search uses MiniSearch in the browser. A small loader fetches the search engine bundle and index only when a visitor
+opens search; the build bundles MiniSearch locally, with no hosted search service or theme dependency.
 
 ## Build locally
 
 You need Python 3 and Docker (or Podman), plus a checkout of `squid-farm/talewright`.
 
 ```bash
+npm ci
 python3 scripts/sync_docs.py ../talewright docs
 docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/site" -e GITHUB_WORKSPACE=/site \
   -e INPUT_SOURCE=./ -e INPUT_DESTINATION=./_site -e GITHUB_REPOSITORY=squid-farm/talewright-site \
   ghcr.io/actions/jekyll-build-pages:v1.0.13
+python3 scripts/build_search_index.py _site
+npm run build:search -- --outfile=_site/assets/search.js
+cp node_modules/minisearch/LICENSE.txt _site/assets/minisearch.LICENSE.txt
+python3 -m unittest discover -s tests -v
+npm run test:search
 python3 scripts/check_site.py _site
 python3 -m http.server -d _site 8000
 ```
+
+The generated `search-index.json` contains one entry per heading section in the built marketing pages and public
+docs. Navigation, footer content, repeated docs source notices and noindex pages are excluded. Search follows the
+built heading anchors, and the site check fails if the index is missing, empty or links to a missing page or heading.
+Search-specific tests include tokenization, ranking, excerpts, syntax and diagnostic queries, and keyboard use of
+the search dialog.
 
 ## Deployment
 
