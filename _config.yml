@@ -16,5 +16,6 @@ kramdown:
 exclude:
   - README.md
   - scripts/
+  - node_modules/
   - .talewright/
   - vendor/

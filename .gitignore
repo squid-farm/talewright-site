@@ -1,6 +1,8 @@
 _site/
 .jekyll-cache/
 .jekyll-metadata
+__pycache__/
+node_modules/
 .talewright/
 # Generated from squid-farm/talewright by scripts/sync_docs.py; do not commit.
 docs/

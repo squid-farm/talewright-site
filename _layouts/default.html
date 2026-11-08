@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-search-index-url="{{ '/search-index.json' | relative_url }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,11 +32,27 @@
         <li><a href="{{ '/getting-started/' | relative_url }}"{% if page.url == '/getting-started/' %} aria-current="page"{% endif %}>Getting started</a></li>
         <li><a href="{{ '/features/' | relative_url }}"{% if page.url == '/features/' %} aria-current="page"{% endif %}>Features</a></li>
         <li><a href="{{ '/docs/' | relative_url }}"{% if page.url contains '/docs/' %} aria-current="page"{% endif %}>Docs</a></li>
+        <li><button class="search-trigger" id="search-trigger" type="button" aria-haspopup="dialog" aria-controls="site-search" hidden>Search</button></li>
         <li><a href="{{ site.player_url }}">Web player</a></li>
         <li><a href="{{ site.repo_url }}">GitHub</a></li>
       </ul>
     </nav>
   </header>
+  <dialog class="search-dialog" id="site-search" aria-labelledby="search-title">
+    <div class="search-dialog-heading">
+      <h2 id="search-title">Search Talewright</h2>
+      <button class="search-close" id="search-close" type="button">Close</button>
+    </div>
+    <form class="search-form" id="search-form" role="search">
+      <label for="search-query">Search marketing pages and documentation</label>
+      <div class="search-input-row">
+        <input id="search-query" type="search" autocomplete="off" spellcheck="false">
+        <button class="button primary" type="submit">Search</button>
+      </div>
+    </form>
+    <p class="search-status" id="search-status" role="status" aria-live="polite" aria-atomic="true">Search loads when opened.</p>
+    <ol class="search-results" id="search-results"></ol>
+  </dialog>
   <main id="main" tabindex="-1">
     {{ content }}
   </main>
@@ -47,5 +63,6 @@
         Documentation and screenshots come from <a href="{{ site.repo_url }}">squid-farm/talewright</a>.</p>
     </div>
   </footer>
+  <script type="module" src="{{ '/assets/search-loader.js' | relative_url }}"></script>
 </body>
 </html>
