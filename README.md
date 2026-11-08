@@ -40,7 +40,7 @@ opens search; the build bundles MiniSearch locally, with no hosted search servic
 
 ## Build locally
 
-You need Python 3 and Docker (or Podman), plus a checkout of `squid-farm/talewright`.
+You need Node.js 22, Python 3 and Docker (or Podman), plus a checkout of `squid-farm/talewright`.
 
 ```bash
 npm ci
@@ -54,6 +54,8 @@ cp node_modules/minisearch/LICENSE.txt _site/assets/minisearch.LICENSE.txt
 python3 -m unittest discover -s tests -v
 npm run test:search
 python3 scripts/check_site.py _site
+npx playwright install chromium
+npm run test:search:browser
 python3 -m http.server -d _site 8000
 ```
 
@@ -62,6 +64,12 @@ docs. Navigation, footer content, repeated docs source notices and noindex pages
 built heading anchors, and the site check fails if the index is missing, empty or links to a missing page or heading.
 Search-specific tests include tokenization, ranking, excerpts, syntax and diagnostic queries, and keyboard use of
 the search dialog.
+
+Matched terms are highlighted in result titles and excerpts, including prefix and typo matches. Result links carry
+the query in a `search` URL parameter so the destination page can highlight the same terms while preserving the
+heading anchor. Ordinary visits still do not load the search bundle or index. Results update as you type; the Search
+button and Enter focus the first result, ready for keyboard navigation. Browser tests exercise this complete flow,
+including `===`, `:::`, heading navigation, persisted highlighting, reopening search and safe text rendering.
 
 The CI Jekyll action creates root-owned output. The workflow restores ownership of `_site/` to the runner before
 generating the search index and bundle. The local Docker command above uses your user ID instead.

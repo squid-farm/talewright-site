@@ -256,6 +256,7 @@ figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
 .search-result-link { display: flex; flex-direction: column; text-decoration: none; }
 .search-result-link:hover strong { text-decoration: underline; }
 .search-result-link small { color: var(--muted); font-size: 0.85rem; }
+.search-match { background: #ffe08a; color: #222222; border-radius: 2px; }
 
 @media (max-width: 34rem) {
   .search-input-row { align-items: stretch; flex-direction: column; }

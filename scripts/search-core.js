@@ -1,9 +1,15 @@
 import MiniSearch from "minisearch";
 
-const TOKEN_PATTERN = /@[A-Z0-9_-]+|#[A-Z0-9_-]+|\{[A-Z0-9_:.-]+(?:#[A-Z0-9_-]+)?\}|->|[\p{L}\p{N}]+/giu;
+const TOKEN_PATTERN = /@[A-Z0-9_-]+|#[A-Z0-9_-]+|\{[A-Z0-9_:.-]+(?:#[A-Z0-9_-]+)?\}|===|:::|->|[\p{L}\p{N}]+/giu;
 
 export function tokenize(text) {
   return text.match(TOKEN_PATTERN)?.map((term) => term.toLocaleLowerCase("en-US")) ?? [];
+}
+
+export function matchingTokens(text, terms) {
+  const normalizedTerms = new Set(terms.map((term) => term.toLocaleLowerCase("en-US")));
+  return [...text.matchAll(TOKEN_PATTERN)]
+    .filter((match) => normalizedTerms.has(match[0].toLocaleLowerCase("en-US")));
 }
 
 export function createSearchIndex(records) {
@@ -26,7 +32,7 @@ export function searchRecords(index, query) {
 
   return index.search(normalizedQuery, {
     prefix: true,
-    fuzzy: 0.2,
+    fuzzy: (term) => /^[\p{L}\p{N}]+$/u.test(term) ? 0.2 : false,
     boost: { pageTitle: 12, heading: 8, body: 1 },
   });
 }

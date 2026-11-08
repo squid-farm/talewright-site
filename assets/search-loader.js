@@ -18,20 +18,38 @@ export function attachSearch(document, loadSearch = () => import("./search.js"))
     input.focus();
 
     try {
-      const { initializeSearch } = await loadSearch();
-      await initializeSearch(document);
-      input.focus();
+      const { initializeSearch, refreshSearch } = await loadSearch();
+      const index = await initializeSearch(document);
+      refreshSearch(document, index);
+      input.disabled = false;
+      document.getElementById("search-submit").disabled = false;
+      if (dialog.open) {
+        input.focus();
+      }
     } catch (error) {
       console.error("Could not load site search.", error);
       status.textContent = "Search could not be loaded. Please try again later.";
     }
   });
   close.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      dialog.close();
+    }
+  });
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
     dialog.close();
   });
   dialog.addEventListener("close", () => trigger.focus());
+
+  if (document.location && new URL(document.location.href).searchParams.has("search")) {
+    loadSearch().then(({ highlightDestination }) => highlightDestination(document)).catch((error) => {
+      console.error("Could not highlight search matches.", error);
+      status.textContent = "Search matches could not be highlighted. Please try opening search again.";
+    });
+  }
 }
 
 if (typeof document !== "undefined") {
