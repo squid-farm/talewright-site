@@ -46,9 +46,10 @@
     <form class="search-form" id="search-form" role="search">
       <label for="search-query">Search marketing pages and documentation</label>
       <div class="search-input-row">
-        <input id="search-query" type="search" autocomplete="off" spellcheck="false">
-        <button class="button primary" type="submit">Search</button>
+        <input id="search-query" type="search" autocomplete="off" spellcheck="false" aria-describedby="search-help" disabled>
+        <button class="button primary" id="search-submit" type="submit" disabled>Search</button>
       </div>
+      <p id="search-help">Results update as you type. Press Search or Enter to focus the first result.</p>
     </form>
     <p class="search-status" id="search-status" role="status" aria-live="polite" aria-atomic="true">Search loads when opened.</p>
     <ol class="search-results" id="search-results"></ol>

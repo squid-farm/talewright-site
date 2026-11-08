@@ -3,16 +3,18 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 import { attachSearch } from "../assets/search-loader.js";
-import { createExcerpt, createSearchIndex, searchRecords, tokenize } from "../scripts/search-core.js";
+import { createExcerpt, createSearchIndex, matchingTokens, searchRecords, tokenize } from "../scripts/search-core.js";
 import { bindSearchForm } from "../scripts/search.js";
 
 const root = new URL("../", import.meta.url);
 
 test("tokenization preserves required Talemark syntax and diagnostics", () => {
-  assert.deepEqual(tokenize("@hub #one-many -> {player:pronoun} TW3009"), [
+  assert.deepEqual(tokenize("@hub #one-many -> === ::: {player:pronoun} TW3009"), [
     "@hub",
     "#one-many",
     "->",
+    "===",
+    ":::",
     "{player:pronoun}",
     "tw3009",
   ]);
@@ -46,6 +48,21 @@ test("page titles and section headings rank above body-only matches", () => {
   assert.equal(searchRecords(index, "searchable phrase")[0].id, "title");
 });
 
+test("highlight matching preserves syntax and avoids unrelated word substrings", () => {
+  assert.deepEqual(
+    matchingTokens("TEXT context @hub === :::", ["text", "@hub", "===", ":::"])
+      .map((match) => match[0]),
+    ["TEXT", "@hub", "===", ":::"],
+  );
+  const index = createSearchIndex([{
+    id: "scene",
+    pageTitle: "Scenes",
+    heading: "Scene marker",
+    body: "=== camp",
+    url: "/#scene",
+  }]);
+  assert.deepEqual(searchRecords(index, ":::"), []);
+});
 test("excerpts are concise and find typo-tolerant matches", () => {
   const body = "The introduction is deliberately long. ".repeat(8)
     + "Use a text manipulator to change the rendered wording. "
@@ -62,13 +79,15 @@ test("search form submission runs for keyboard activation", () => {
   const input = new FakeElement();
   const form = new FakeElement();
   let renders = 0;
-  bindSearchForm(form, input, () => { renders += 1; });
+  let focused = false;
+  bindSearchForm(form, input, () => { renders += 1; }, () => { focused = true; });
 
   let prevented = false;
   form.emit("submit", { preventDefault: () => { prevented = true; } });
 
   assert.equal(prevented, true);
   assert.equal(renders, 1);
+  assert.equal(focused, true);
 });
 
 test("search code loads on demand and closing the dialog restores focus", async () => {
@@ -76,7 +95,7 @@ test("search code loads on demand and closing the dialog restores focus", async 
   let loads = 0;
   attachSearch(document, async () => {
     loads += 1;
-    return { initializeSearch: async () => {} };
+    return { initializeSearch: async () => {}, refreshSearch() {} };
   });
 
   assert.equal(loads, 0);
@@ -98,6 +117,8 @@ test("the built index returns the required syntax, diagnostic, and typo searches
     ["@hub", "/docs/guide/writing-stories.html#hubs"],
     ["#one-many", "/docs/reference/talemark-operators.html#manipulator-arguments"],
     ["->", "/docs/guide/writing-stories.html#scenes-run-top-to-bottom"],
+    ["===", "/docs/guide/writing-stories.html#scenes-run-top-to-bottom"],
+    [":::", "/docs/guide/writing-stories.html#skill-checks"],
     ["{player:pronoun}", "/docs/reference/talemark-syntax.html#3-substitutions"],
     ["TW3009", "/docs/reference/diagnostics.html#tw3xxx-story-structure"],
     ["manipula", "/docs/reference/talemark-operators.html#manipulator-arguments"],
@@ -162,6 +183,7 @@ class FakeDocument {
       ["search-trigger", new FakeElement()],
       ["site-search", new FakeElement()],
       ["search-query", new FakeElement()],
+      ["search-submit", new FakeElement()],
       ["search-status", new FakeElement()],
       ["search-close", new FakeElement()],
     ]);

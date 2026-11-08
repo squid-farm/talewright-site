@@ -4,10 +4,12 @@
   "type": "module",
   "scripts": {
     "build:search": "esbuild scripts/search.js --bundle --format=esm --minify",
-    "test:search": "node --test tests/search.test.js"
+    "test:search": "node --test tests/search.test.js",
+    "test:search:browser": "node --test tests/search.browser.test.js"
   },
   "devDependencies": {
     "esbuild": "0.28.2",
-    "minisearch": "7.2.0"
+    "minisearch": "7.2.0",
+    "playwright": "1.65.0"
   }
 }

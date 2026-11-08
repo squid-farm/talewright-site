@@ -1,12 +1,14 @@
 import { createExcerpt, createSearchIndex, searchRecords } from "./search-core.js";
+import { highlightMatches } from "./search-highlight.js";
 
 let initialization;
 
-export function bindSearchForm(form, input, render) {
+export function bindSearchForm(form, input, render, focusResult = () => {}) {
   input.addEventListener("input", render);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     render();
+    focusResult();
   });
 }
 
@@ -26,19 +28,24 @@ function showResults(document, resultsElement, status, index, query) {
     const item = document.createElement("li");
     const link = document.createElement("a");
     link.className = "search-result-link";
-    link.href = match.url;
+    const url = new URL(match.url, document.baseURI);
+    url.searchParams.set("search", query.trim());
+    link.href = url.href;
 
     const heading = document.createElement("strong");
     heading.textContent = match.heading;
     const pageTitle = document.createElement("small");
     pageTitle.textContent = match.pageTitle;
     link.append(heading, pageTitle);
+    const terms = Object.keys(match.match);
+    highlightMatches(link, terms);
     item.append(link);
 
-    const excerpt = createExcerpt(match.body, query);
+    const excerpt = createExcerpt(match.body, terms.join(" "));
     if (excerpt) {
       const paragraph = document.createElement("p");
       paragraph.textContent = excerpt;
+      highlightMatches(paragraph, terms);
       item.append(paragraph);
     }
     resultsElement.append(item);
@@ -46,6 +53,31 @@ function showResults(document, resultsElement, status, index, query) {
 
   if (matches.length === 0) {
     status.textContent = `No results for “${query.trim()}”.`;
+  }
+}
+
+export function refreshSearch(document, index) {
+  showResults(
+    document,
+    document.getElementById("search-results"),
+    document.getElementById("search-status"),
+    index,
+    document.getElementById("search-query").value,
+  );
+}
+
+export async function highlightDestination(document = globalThis.document) {
+  const url = new URL(document.location.href);
+  const query = url.searchParams.get("search");
+  if (!query || !url.hash) {
+    return;
+  }
+  const index = await initializeSearch(document);
+  const match = searchRecords(index, query).find(
+    (result) => result.id === `${url.pathname}${decodeURIComponent(url.hash)}`,
+  );
+  if (match) {
+    highlightMatches(document.getElementById("main"), Object.keys(match.match));
   }
 }
 
@@ -76,7 +108,9 @@ export function initializeSearch(document = globalThis.document) {
     const results = document.getElementById("search-results");
     const status = document.getElementById("search-status");
     const render = () => showResults(document, results, status, index, input.value);
-    bindSearchForm(form, input, render);
+    bindSearchForm(form, input, render, () => {
+      results.querySelector("a")?.focus();
+    });
     render();
     return index;
   })().catch((error) => {

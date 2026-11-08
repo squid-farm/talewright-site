@@ -58,6 +58,10 @@ jobs:
           npm run test:search
       - name: Check pages, links and anchors
         run: python3 scripts/check_site.py _site
+      - name: Install Chromium for search interaction tests
+        run: npx playwright install --with-deps chromium
+      - name: Test search in the browser
+        run: npm run test:search:browser
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
