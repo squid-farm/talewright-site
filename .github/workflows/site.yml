@@ -44,6 +44,8 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Make container build output writable by the runner
+        run: sudo chown -R "$(id -u):$(id -g)" _site
       - name: Generate the section search index
         run: python3 scripts/build_search_index.py _site
       - name: Bundle the on-demand search code

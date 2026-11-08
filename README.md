@@ -63,6 +63,9 @@ built heading anchors, and the site check fails if the index is missing, empty o
 Search-specific tests include tokenization, ranking, excerpts, syntax and diagnostic queries, and keyboard use of
 the search dialog.
 
+The CI Jekyll action creates root-owned output. The workflow restores ownership of `_site/` to the runner before
+generating the search index and bundle. The local Docker command above uses your user ID instead.
+
 ## Deployment
 
 GitHub Pages for this repository must use **Source: GitHub Actions** and the custom domain
